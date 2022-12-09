@@ -23,7 +23,40 @@ docker ps
 CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                               NAMES
 9e6f50f6d3c9   mysql:latest   "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   mysql
 ```
-> Чтобы войти в контейнер по ID
+> Чтобы войти в контейнер по ID (Если идете просто по гайду, то заходить в контейнер не нужно, подключимся из нашей системы сразу к MySQL)
 ```
 docker exec -ti 9e6f50f6d3c9 /bin/bash
 ```
+> Скачиваем клиент mysql, если такового не имеется, ссылка для шиндовс:
+`https://dev.mysql.com/downloads/mysql/`
+
+>Разархивируем куда-нибудь и прописываем путь к папке bin в PATH
+```
+set PATH=%PATH%;"C:\mysql-8.0.31-winx64\bin"
+```
+>Подключаемся к MySQL
+```
+mysql -h localhost -u root -p
+```
+> Создаем таблицу target_phone с полями name и number
+```
+use hacker_db;
+CREATE TABLE target_phone (name VARCHAR(20), number VARCHAR(11));
+```
+> Вставляем тестовую запись в БД
+```
+INSERT INTO target_phone (name, number) VALUES ('Test', '79139445566');
+```
+> Проверяем
+```
+SELECT * FROM target_phone;
+
+Ожидаемый вывод:
++------+-------------+
+| name | number      |
++------+-------------+
+| Test | 79139445566 |
++------+-------------+
+1 row in set (0.00 sec)
+```
+> Всё ок, теперь можно из скрипта делать записи в БД
