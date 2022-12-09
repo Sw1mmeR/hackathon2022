@@ -7,7 +7,7 @@ import time
 import pymysql
 
 server_ip = '172.16.1.100'
-server_port = 5555
+server_port = 6666
 
 def receive_file_size(sck: socket.socket):
     fmt = "<Q"
