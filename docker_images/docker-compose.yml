@@ -3,11 +3,29 @@ version: "3"
 services:
   server:
     build: ./
-    command: python ./server.py
+    command: python ./server.py > server.log
     ports:
       - 6666:6666
     networks:
       - intruder_net
+  db:
+    image: mysql:latest
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=hacker_db
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - '3306:3306'
+    networks:
+      - intruder_net
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  db:
+    driver: local
 networks:
   intruder_net:
     external: true

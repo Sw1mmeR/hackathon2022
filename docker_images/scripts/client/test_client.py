@@ -13,7 +13,7 @@ def send_file(sck: socket.socket, fileName):
             sck.sendall(read_bytes)
 #try:
 if(__name__ == '__main__'):
-    with socket.create_connection(("172.16.1.100", 5555)) as conn:
+    with socket.create_connection(("localhost", 6666)) as conn:
         print("Connecting to the server...")
         send_file(conn, "data.txt")
         print("Sended.")

@@ -32,20 +32,20 @@ def receive_file(sck: socket.socket, filename):
                 if chunk:
                     f.write(chunk)
                     received_bytes += len(chunk)
-        time.sleep(1)
+        time.sleep(2)
         with open('/server/recieved.txt', 'r') as file:
             for line in file:
                 insert_data = line.split(' ')
                 insert_to_db(insert_data[0], insert_data[1])
     except pymysql.Error as ex:
         print(f'{ex}')
-    except Exception as ex:
-        print('Error. Contact Mikle or fix it yourself :)')
+    #except Exception as ex:
+        #print('Error. Contact Mikle or fix it yourself :)')
     finally:
         print('Data recieved!')
 
 def insert_to_db(name, number) -> None:
-    db = pymysql.connect(host='172.16.1.100', user='root', passwd='root', db='hacker_db')
+    db = pymysql.connect(host='127.0.0.1', user='root', passwd='root', db='hacker_db')
     cursor = db.cursor()
     sql = f"INSERT INTO target_phone (name, number) values ('{name}', '{number}')"
     cursor.execute(sql)
